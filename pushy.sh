@@ -4,11 +4,16 @@ DIR=`ls .`
 for dir in ${DIR};do
 	if [ -d ${dir} ];then
 		if [ -d $dir/.git ]; then
-			BRANCH=`git symbolic-ref --short HEAD`
-			COMMIT=``
-			echo 'yes!'
+			cd $dir
+			BRANCH=`git rev-parse --abbrev-ref HEAD`
+			COMMIT=`git rev-parse HEAD`
+			echo $BRANCH > BRANCH.txt
+			echo $COMMIT > COMMIT.txt
+			rm -rf .git
+			echo $dir.' is ready for feed'
+			cd ..
 		else
-			echo 'nope!'
+			echo $dir.' has been proceed'
 		fi
 	fi
 done
