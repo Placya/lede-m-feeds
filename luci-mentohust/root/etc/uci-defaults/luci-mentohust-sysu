@@ -1,0 +1,11 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	delete ucitrack.@mentohust-sysu[-1]
+	add ucitrack mentohust-sysu
+	set ucitrack.@mentohust-sysu[-1].init=mentohust-sysu
+	commit ucitrack
+EOF
+
+rm -f /tmp/luci-indexcache
+exit 0
