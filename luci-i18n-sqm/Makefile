@@ -28,6 +28,14 @@ define Package/luci-i18n-sqm/description
 	Language Support Packages.
 endef
 
+define Package/luci-i18n-sqm/conffiles
+/usr/lib/sqm/layer_cake.qos.help
+/usr/lib/sqm/piece_of_cake.qos.help
+/usr/lib/sqm/simple.qos.help
+/usr/lib/sqm/simplest.qos.help
+/usr/lib/sqm/simplest_tbf.qos.help
+endef
+
 define Build/Prepare
 	$(foreach po,$(wildcard ${CURDIR}/i18n/*.po), \
 		po2lmo $(po) $(PKG_BUILD_DIR)/$(patsubst %.po,%.lmo,$(notdir $(po)));)
