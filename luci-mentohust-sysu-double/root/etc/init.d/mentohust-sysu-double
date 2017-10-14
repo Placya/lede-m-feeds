@@ -1,0 +1,52 @@
+#!/bin/sh /etc/rc.common
+
+START=55
+STOP=10
+
+start()
+{
+if [ $(uci get mentohust-sysu-double.@option[0].enable) ] ;
+then
+	echo [MentoHUST] > /etc/mentohust-sysu-double.conf
+	echo Username=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Username) >> /etc/mentohust-sysu-double.conf
+	echo Password=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Password) >> /etc/mentohust-sysu-double.conf
+	echo Nic=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Nic) >> /etc/mentohust-sysu-double.conf
+	echo IP=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].IP) >> /etc/mentohust-sysu-double.conf
+	echo Mask=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Mask) >> /etc/mentohust-sysu-double.conf
+	echo Gateway=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Gateway) >> /etc/mentohust-sysu-double.conf
+	echo DNS=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].DNS) >> /etc/mentohust-sysu-double.conf
+	echo PingHost=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].PingHost) >> /etc/mentohust-sysu-double.conf
+	echo Timeout=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Timeout) >> /etc/mentohust-sysu-double.conf
+	echo EchoInterval=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].EchoInterval) >> /etc/mentohust-sysu-double.conf
+	echo RestartWait=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].RestartWait) >> /etc/mentohust-sysu-double.conf
+	echo MaxFail=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].MaxFail) >> /etc/mentohust-sysu-double.conf
+	echo StartMode=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].StartMode) >> /etc/mentohust-sysu-double.conf
+	echo DhcpMode=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].DhcpMode) >> /etc/mentohust-sysu-double.conf
+	echo DaemonMode=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].DaemonMode) >> /etc/mentohust-sysu-double.conf
+	echo Version=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].Version) >> /etc/mentohust-sysu-double.conf
+	echo DataFile=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].DataFile) >> /etc/mentohust-sysu-double.conf
+	echo dhcpscript=$(uci get mentohust-sysu-double.@mentohust-sysu-double[0].dhcpscript) >> /etc/mentohust-sysu-double.conf
+	mentohust-sysu-double >/dev/null 2>&1
+else
+	stop
+fi
+
+if [ $(uci get mentohust-sysu-double.@option[0].boot) ] ;
+then
+	/etc/init.d/mentohust-sysu-double enable
+else
+	/etc/init.d/mentohust-sysu-double disable
+fi
+}
+
+stop()
+{
+sync
+mentohust-sysu-double -k >/dev/null 2>&1
+}
+
+restart()
+{
+stop
+start
+}
