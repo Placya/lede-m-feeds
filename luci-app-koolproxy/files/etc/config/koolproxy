@@ -1,6 +1,0 @@
-
-config global
-	option filter_mode 'global'
-	option time_update '4'
-	option enabled '0'
-	option startup_delay '0'
