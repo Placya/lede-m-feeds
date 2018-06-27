@@ -23,7 +23,7 @@ PKG_LICENSE:=GPLv3
 
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
-# PKG_FIXUP:=autoreconf
+PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -51,7 +51,7 @@ CONFIGURE_ARGS += \
 	--with-pcap=dylib
 
 define Build/Configure
-	( cd $(PKG_BUILD_DIR); ./autogen.sh )
+	#( cd $(PKG_BUILD_DIR); ./autogen.sh )
 	$(call Build/Configure/Default)
 endef
 
